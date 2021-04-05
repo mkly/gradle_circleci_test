@@ -1,0 +1,25 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@1.0.3
+
+jobs:
+  unit-test:
+    machine:
+      image: android:202102-01
+    steps:
+      - checkout
+      - run:
+          name: check installed global gradle version
+          command: |
+            gradle --version
+      - run:
+          name: check gradlew version from gradle-wrapper.properties
+          command: |
+              cat gradle/wrapper/gradle-wrapper.properties
+              ./gradlew
+
+workflows:
+  test-and-build:
+    jobs:
+      - unit-test
